@@ -12,17 +12,20 @@
     <div class="container" id="container">
 
         <p id="codigo">PEDIDO:00000</p>
-        <div class="image-container">
-            <img id="image" src="img.webp" alt="">
-            <div class="input-file">
-                <label for="imageFile"><i class="fa-solid fa-image"></i></label>
-                <input type="file" id="imageFile" name="filename" onchange="">
+
+        <div class="image-div">
+            <div class="image-container">
+                <img id="image" src="img.webp" alt="">
+                <div class="input-file">
+                    <label for="imageFile"><i class="fa-solid fa-image"></i></label>
+                    <input type="file" id="imageFile" name="filename" onchange="">
+                </div>
             </div>
         </div>
 
-
         <div class="pdf-container">
-            <embed id="pdf-load" src="" type="application/pdf">
+            <canvas id="pdf-load"></canvas>
+
             <div class="input-file">
                 <label for="inputFile"><i class="fa-solid fa-file-pdf"></i></label>
                 <input type="file" id="inputFile" name="filename">
@@ -31,10 +34,8 @@
         <button id="btnSalvar">SALVAR</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
-        integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
-        crossorigin="anonymous"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="jspdf.debug.js"></script>
+    <script src="html2canvas.min.js"></script>
     <script src="https://kit.fontawesome.com/8e4a25e86e.js" crossorigin="anonymous"></script>
     <script src="pdf.js"></script>
     <script src="script.js"></script>

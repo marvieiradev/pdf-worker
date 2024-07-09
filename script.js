@@ -25,18 +25,11 @@ document.getElementById('btnSalvar').addEventListener('click', function () {
         scale: window.devicePixelRatio,
         logging: true,
         useCORS: true,
-        //windowHeight: window.innerHeight,
-        //windowWidth: window.innerWidth
     }).then(canvas => {
-        var image = canvas.toDataURL("image/png")//.replace("image/png", "image/octet-stream");
-        var link = document.createElement('a');
-        link.download = `${codigo.innerText.replace("PEDIDO:", "")}.png`;
-        link.href = image;
-        link.click();
-
-        //var doc = new jsPDF('p', 'mm');
-        //doc.addImage(image, 'PNG', 10, 10);
-        //doc.save(`${codigo.innerText.replace("PEDIDO:", "")}.pdf`);
+        var image = canvas.toDataURL("image/png")
+        var doc = new jsPDF('p', 'mm', 'a4');
+        doc.addImage(image, 'PNG', 10, 10);
+        doc.save(`${codigo.innerText.replace("PEDIDO:", "")}.pdf`);
 
         this.classList.remove('hidden');
     });
@@ -61,6 +54,27 @@ function lerPDF(fileToLoad) {
         var pdfDocument = pdf;
         var pagesPromises = [];
 
+        pdf.getPage(1).then(function (page) {
+
+            var scale = 3;
+            var viewport = page.getViewport({ scale: scale });
+
+            var canvas = document.getElementById('pdf-load');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+
+            renderTask.promise.then(function () {
+                //console.log('Página renderizada!');
+            });
+        });
+
         for (var i = 0; i < pdf.numPages; i++) {
             (function (pageNumber) {
                 pagesPromises.push(getPageText(pageNumber, pdfDocument));
@@ -69,7 +83,7 @@ function lerPDF(fileToLoad) {
 
         Promise.all(pagesPromises).then(function (pagesText) {
             var codigoPedido = "" + pagesText;
-            codigo.innerText = codigoPedido.substring(codigoPedido.search("PEDIDO:"), 31);
+            codigo.innerText = codigoPedido.substring(codigoPedido.search("PEDIDO:"), 60);
         });
 
     }, function (reason) {
