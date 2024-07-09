@@ -69,7 +69,7 @@ function lerPDF(fileToLoad) {
 
         Promise.all(pagesPromises).then(function (pagesText) {
             var codigoPedido = "" + pagesText;
-            codigo.innerText = codigoPedido.substring(codigoPedido.search("PEDIDO:"), 31);
+            codigo.innerText = codigoPedido.substring(codigoPedido.search("PEDIDO:"), 60);
         });
 
     }, function (reason) {
