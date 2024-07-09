@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="pdf.js"></script>
+</head>
+
+<body>
+    <h1 id="codigo"></h1>
+
+    <input id="inputFile" type="file" onchange="convertToBase64();" />
+    <script>
+        pdfjsLib.workerSrc = 'pdf.worker.js';
+
+        function convertToBase64() {
+            var selectedFile = document.getElementById("inputFile").files;
+            if (selectedFile.length > 0) {
+                var fileToLoad = selectedFile[0];
+                var fileReader = new FileReader();
+                var base64;
+                fileReader.onload = function (fileLoadedEvent) {
+                    base64 = fileLoadedEvent.target.result;
+                    lerPDF(base64);
+                };
+                fileReader.readAsDataURL(fileToLoad);
+            }
+        }
+
+        function lerPDF(fileToLoad) {
+            pdfjsLib.getDocument(fileToLoad).promise.then(function (pdf) {
+                var pdfDocument = pdf;
+                var pagesPromises = [];
+
+                for (var i = 0; i < pdf.numPages; i++) {
+                    (function (pageNumber) {
+                        pagesPromises.push(getPageText(pageNumber, pdfDocument));
+                    })(i + 1);
+                }
+
+                Promise.all(pagesPromises).then(function (pagesText) {
+                    var codigoPedido = "" + pagesText;
+                    document.getElementById("codigo").innerText = codigoPedido.substring(codigoPedido.search("TESTE"), codigoPedido.search("  "));
+                });
+
+            }, function (reason) {
+                console.error(reason);
+            });
+
+
+
+        }
+
+        function getPageText(pageNum, PDFDocumentInstance) {
+            return new Promise(function (resolve, reject) {
+                PDFDocumentInstance.getPage(pageNum).then(function (pdfPage) {
+                    pdfPage.getTextContent().then(function (textContent) {
+                        var textItems = textContent.items;
+                        var finalString = "";
+                        for (var i = 0; i < textItems.length; i++) {
+                            var item = textItems[i];
+                            finalString += item.str + " ";
+                        }
+                        resolve(finalString);
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
