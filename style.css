@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #b1d6ff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    width: 90vmin;
+    height: 100vmin;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    flex-direction: column;
+    background-color: #FFFFFF;
+}
+
+p {
+    margin: 10px;
+    font-size: 20px;
+}
+
+.image-container {
+    background-color: #d3e7ff;
+    height: 250px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.pdf-container {
+    background-color: #d3e7ff;
+    height: 60%;
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container p,
+.pdf-container p {
+    align-items: center;
+    text-align: center;
+}
+
+img {
+    object-fit: contain;
+    width: inherit;
+    height: inherit;
+}
+
+embed {
+    object-fit: fill;
+    width: 83%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#toolbar {
+    display: none !important;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.input-file {
+    display: flex;
+    align-items: center;
+    background-color: #7e5bff;
+    color: #fff;
+    font-size: 20px;
+    padding: 15px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 99;
+    width: 20px;
+    height: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
